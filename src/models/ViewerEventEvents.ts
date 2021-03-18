@@ -1,29 +1,29 @@
 import Sequelize, {
     DataTypes, Model, Optional,
 } from 'sequelize';
-import type { Target, TargetId } from './Target';
+import type { Event, EventId } from './Event';
 import type { Viewer, ViewerId } from './Viewer';
 
-export interface ViewerTargetTargetsAttributes {
+export interface ViewerEventEventsAttributes {
     id: string;
     viewerID: string;
-    targetID: string;
+    eventID: string;
     createdAt?: Date;
     updatedAt?: Date;
     deletedAt?: Date;
 }
 
-export type ViewerTargetTargetsPk = "id";
-export type ViewerTargetTargetsId = ViewerTargetTargets[ViewerTargetTargetsPk];
-export type ViewerTargetTargetsCreationAttributes = Optional<ViewerTargetTargetsAttributes, ViewerTargetTargetsPk>;
+export type ViewerEventEventsPk = "id";
+export type ViewerEventEventsId = ViewerEventEvents[ViewerEventEventsPk];
+export type ViewerEventEventsCreationAttributes = Optional<ViewerEventEventsAttributes, ViewerEventEventsPk>;
 
-export class ViewerTargetTargets extends Model<ViewerTargetTargetsAttributes, ViewerTargetTargetsCreationAttributes> implements ViewerTargetTargetsAttributes {
+export class ViewerEventEvents extends Model<ViewerEventEventsAttributes, ViewerEventEventsCreationAttributes> implements ViewerEventEventsAttributes {
 
     id!: string;
 
     viewerID!: string;
 
-    targetID!: string;
+    eventID!: string;
 
     createdAt?: Date;
 
@@ -31,16 +31,16 @@ export class ViewerTargetTargets extends Model<ViewerTargetTargetsAttributes, Vi
 
     deletedAt?: Date;
 
-    // viewerTargetTargets belongsTo Target via targetID
-    target!: Target;
+    // viewerEventEvents belongsTo Event via EventID
+    event!: Event;
 
-    getTarget!: Sequelize.BelongsToGetAssociationMixin<Target>;
+    getEvent!: Sequelize.BelongsToGetAssociationMixin<Event>;
 
-    setTarget!: Sequelize.BelongsToSetAssociationMixin<Target, TargetId>;
+    setEvent!: Sequelize.BelongsToSetAssociationMixin<Event, EventId>;
 
-    createTarget!: Sequelize.BelongsToCreateAssociationMixin<Target>;
+    createEvent!: Sequelize.BelongsToCreateAssociationMixin<Event>;
 
-    // viewerTargetTargets belongsTo Viewer via viewerID
+    // viewerEventEvents belongsTo Viewer via viewerID
     viewer!: Viewer;
 
     getViewer!: Sequelize.BelongsToGetAssociationMixin<Viewer>;
@@ -49,9 +49,9 @@ export class ViewerTargetTargets extends Model<ViewerTargetTargetsAttributes, Vi
 
     createViewer!: Sequelize.BelongsToCreateAssociationMixin<Viewer>;
 
-    static initModel(sequelize: Sequelize.Sequelize): typeof ViewerTargetTargets {
+    static initModel(sequelize: Sequelize.Sequelize): typeof ViewerEventEvents {
 
-        ViewerTargetTargets.init({
+        ViewerEventEvents.init({
             id: {
                 defaultValue: Sequelize.fn("[dbo].[GETUMKUUID]", "006", Sequelize.fn("newid")),
                 type: DataTypes.STRING(40),
@@ -66,23 +66,23 @@ export class ViewerTargetTargets extends Model<ViewerTargetTargetsAttributes, Vi
                     key: 'id',
                 },
             },
-            targetID: {
+            eventID: {
                 type: DataTypes.STRING(40),
                 allowNull: false,
                 references: {
-                    model: 'Target',
+                    model: 'Event',
                     key: 'id',
                 },
             },
         }, {
             sequelize,
-            tableName: 'ViewerTargetTargets',
+            tableName: 'ViewerEventEvents',
             schema: 'dbo',
             timestamps: true,
             paranoid: true,
             indexes: [
                 {
-                    name: "PK_ViewerTargetTargets",
+                    name: "PK_ViewerEventEvents",
                     unique: true,
                     fields: [
                         {
@@ -92,7 +92,7 @@ export class ViewerTargetTargets extends Model<ViewerTargetTargetsAttributes, Vi
                 },
             ],
         });
-        return ViewerTargetTargets;
+        return ViewerEventEvents;
 
     }
 

@@ -2,13 +2,12 @@ import Sequelize, {
     DataTypes, Model, Optional,
 } from 'sequelize';
 import type { Target, TargetId } from './Target';
-import type { Viewer, ViewerId } from './Viewer';
+import type { ViewerEventEvents, ViewerEventEventsId } from './ViewerEventEvents';
 
 export interface EventAttributes {
     id: string;
     name: string;
     targetID: string;
-    viewerID: string;
     time: Date;
     createdAt?: Date;
     updatedAt?: Date;
@@ -28,8 +27,6 @@ export class Event extends Model<EventAttributes, EventCreationAttributes> imple
 
     targetID!: string;
 
-    viewerID!: string;
-
     time!: Date;
 
     createdAt?: Date;
@@ -47,14 +44,28 @@ export class Event extends Model<EventAttributes, EventCreationAttributes> imple
 
     createTarget!: Sequelize.BelongsToCreateAssociationMixin<Target>;
 
-    // Event belongsTo Viewer via viewerID
-    viewer!: Viewer;
+    // Target hasMany ViewerTargetTargets via targetID
+    ViewerEventEvents!: ViewerEventEvents[];
 
-    getViewer!: Sequelize.BelongsToGetAssociationMixin<Viewer>;
+    getViewerEventEvents!: Sequelize.HasManyGetAssociationsMixin<ViewerEventEvents>;
 
-    setViewer!: Sequelize.BelongsToSetAssociationMixin<Viewer, ViewerId>;
+    setViewerEventEvents!: Sequelize.HasManySetAssociationsMixin<ViewerEventEvents, ViewerEventEventsId>;
 
-    createViewer!: Sequelize.BelongsToCreateAssociationMixin<Viewer>;
+    addViewerEventEvent!: Sequelize.HasManyAddAssociationMixin<ViewerEventEvents, ViewerEventEventsId>;
+
+    addViewerEventEvents!: Sequelize.HasManyAddAssociationsMixin<ViewerEventEvents, ViewerEventEventsId>;
+
+    createViewerEventEvent!: Sequelize.HasManyCreateAssociationMixin<ViewerEventEvents>;
+
+    removeViewerEventEvent!: Sequelize.HasManyRemoveAssociationMixin<ViewerEventEvents, ViewerEventEventsId>;
+
+    removeViewerEventEvents!: Sequelize.HasManyRemoveAssociationsMixin<ViewerEventEvents, ViewerEventEventsId>;
+
+    hasViewerEventEvent!: Sequelize.HasManyHasAssociationMixin<ViewerEventEvents, ViewerEventEventsId>;
+
+    hasViewerEventEvents!: Sequelize.HasManyHasAssociationsMixin<ViewerEventEvents, ViewerEventEventsId>;
+
+    countViewerEventEvents!: Sequelize.HasManyCountAssociationsMixin;
 
     static initModel(sequelize: Sequelize.Sequelize): typeof Event {
 
@@ -74,14 +85,6 @@ export class Event extends Model<EventAttributes, EventCreationAttributes> imple
                 allowNull: false,
                 references: {
                     model: 'Target',
-                    key: 'id',
-                },
-            },
-            viewerID: {
-                type: DataTypes.STRING(40),
-                allowNull: false,
-                references: {
-                    model: 'Viewer',
                     key: 'id',
                 },
             },

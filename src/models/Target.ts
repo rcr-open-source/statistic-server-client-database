@@ -2,7 +2,7 @@ import Sequelize, {
     DataTypes, Model, Optional,
 } from 'sequelize';
 import type { Event, EventId } from './Event';
-import type { ViewerTargetTargets, ViewerTargetTargetsId } from './ViewerTargetTargets';
+import type { System, SystemId } from './System';
 
 export interface TargetAttributes {
     id: string;
@@ -31,6 +31,15 @@ export class Target extends Model<TargetAttributes, TargetCreationAttributes> im
 
     deletedAt?: Date;
 
+    // Target belongsTo System via systemID
+    system!: System;
+
+    getSystem!: Sequelize.BelongsToGetAssociationMixin<System>;
+
+    setSystem!: Sequelize.BelongsToSetAssociationMixin<System, SystemId>;
+
+    createSystem!: Sequelize.BelongsToCreateAssociationMixin<System>;
+
     // Target hasMany Event via targetID
     Events!: Event[];
 
@@ -53,29 +62,6 @@ export class Target extends Model<TargetAttributes, TargetCreationAttributes> im
     hasEvents!: Sequelize.HasManyHasAssociationsMixin<Event, EventId>;
 
     countEvents!: Sequelize.HasManyCountAssociationsMixin;
-
-    // Target hasMany viewerTargetTargets via targetID
-    ViewerTargetTargets!: ViewerTargetTargets[];
-
-    getViewerTargetTargets!: Sequelize.HasManyGetAssociationsMixin<ViewerTargetTargets>;
-
-    setViewerTargetTargets!: Sequelize.HasManySetAssociationsMixin<ViewerTargetTargets, ViewerTargetTargetsId>;
-
-    addViewerTargetTarget!: Sequelize.HasManyAddAssociationMixin<ViewerTargetTargets, ViewerTargetTargetsId>;
-
-    addViewerTargetTargets!: Sequelize.HasManyAddAssociationsMixin<ViewerTargetTargets, ViewerTargetTargetsId>;
-
-    createViewerTargetTarget!: Sequelize.HasManyCreateAssociationMixin<ViewerTargetTargets>;
-
-    removeViewerTargetTarget!: Sequelize.HasManyRemoveAssociationMixin<ViewerTargetTargets, ViewerTargetTargetsId>;
-
-    removeViewerTargetTargets!: Sequelize.HasManyRemoveAssociationsMixin<ViewerTargetTargets, ViewerTargetTargetsId>;
-
-    hasViewerTargetTarget!: Sequelize.HasManyHasAssociationMixin<ViewerTargetTargets, ViewerTargetTargetsId>;
-
-    hasViewerTargetTargets!: Sequelize.HasManyHasAssociationsMixin<ViewerTargetTargets, ViewerTargetTargetsId>;
-
-    countViewerTargetTargets!: Sequelize.HasManyCountAssociationsMixin;
 
     static initModel(sequelize: Sequelize.Sequelize): typeof Target {
 

@@ -4,7 +4,6 @@ export async function updateEvent(
     id: string,
     name?: string,
     targetID?: string,
-    viewerID?: string,
     time?: Date
 ): Promise<Event | null> {
 
@@ -18,7 +17,6 @@ export async function updateEvent(
         await Event.update({
             name,
             targetID,
-            viewerID,
             time,
         }, options);
 
