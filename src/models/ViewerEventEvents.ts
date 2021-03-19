@@ -8,14 +8,16 @@ export interface ViewerEventEventsAttributes {
     id: string;
     viewerID: string;
     eventID: string;
+    time: Date;
     createdAt?: Date;
     updatedAt?: Date;
     deletedAt?: Date;
 }
 
 export type ViewerEventEventsPk = "id";
+export type ViewerEventEventsTime = "time";
 export type ViewerEventEventsId = ViewerEventEvents[ViewerEventEventsPk];
-export type ViewerEventEventsCreationAttributes = Optional<ViewerEventEventsAttributes, ViewerEventEventsPk>;
+export type ViewerEventEventsCreationAttributes = Optional<Optional<ViewerEventEventsAttributes, ViewerEventEventsPk>, ViewerEventEventsTime>;
 
 export class ViewerEventEvents extends Model<ViewerEventEventsAttributes, ViewerEventEventsCreationAttributes> implements ViewerEventEventsAttributes {
 
@@ -24,6 +26,8 @@ export class ViewerEventEvents extends Model<ViewerEventEventsAttributes, Viewer
     viewerID!: string;
 
     eventID!: string;
+
+    time!: Date;
 
     createdAt?: Date;
 
@@ -73,6 +77,11 @@ export class ViewerEventEvents extends Model<ViewerEventEventsAttributes, Viewer
                     model: 'Event',
                     key: 'id',
                 },
+            },
+            time: {
+                type: DataTypes.DATE,
+                allowNull: false,
+                defaultValue: Sequelize.fn("GETDATE"),
             },
         }, {
             sequelize,

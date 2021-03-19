@@ -5,6 +5,7 @@ export async function updateViewerEventEvents(
     id: string,
     viewerID?: string,
     eventID?: string,
+    time?: Date
 ): Promise<ViewerEventEvents | null> {
 
     const options = {
@@ -17,6 +18,7 @@ export async function updateViewerEventEvents(
         await ViewerEventEvents.update({
             eventID,
             viewerID,
+            time
         }, options);
 
         return await ViewerEventEvents.findOne(options);

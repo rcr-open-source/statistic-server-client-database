@@ -4,3 +4,4 @@ export * from "./findEvents";
 export * from "./updateEvent";
 export * from "./deleteEvent";
 export * from "./deleteEvents";
+export * from "./findEventsByTargetId";

@@ -4,7 +4,6 @@ export async function updateEvent(
     id: string,
     name?: string,
     targetID?: string,
-    time?: Date
 ): Promise<Event | null> {
 
     const options = {
@@ -17,7 +16,6 @@ export async function updateEvent(
         await Event.update({
             name,
             targetID,
-            time,
         }, options);
 
         return await Event.findOne(options);

@@ -8,16 +8,14 @@ export interface EventAttributes {
     id: string;
     name: string;
     targetID: string;
-    time: Date;
     createdAt?: Date;
     updatedAt?: Date;
     deletedAt?: Date;
 }
 
 export type EventPk = "id";
-export type EventTime = "time";
 export type EventId = Event[EventPk];
-export type EventCreationAttributes = Optional<Optional<EventAttributes, EventPk>, EventTime>;
+export type EventCreationAttributes = Optional<EventAttributes, EventPk>;
 
 export class Event extends Model<EventAttributes, EventCreationAttributes> implements EventAttributes {
 
@@ -26,8 +24,6 @@ export class Event extends Model<EventAttributes, EventCreationAttributes> imple
     name!: string;
 
     targetID!: string;
-
-    time!: Date;
 
     createdAt?: Date;
 
@@ -87,11 +83,6 @@ export class Event extends Model<EventAttributes, EventCreationAttributes> imple
                     model: 'Target',
                     key: 'id',
                 },
-            },
-            time: {
-                type: DataTypes.DATE,
-                allowNull: false,
-                defaultValue: Sequelize.fn("GETDATE"),
             },
         }, {
             sequelize,
