@@ -5,3 +5,5 @@ export * from "./updateEvent";
 export * from "./deleteEvent";
 export * from "./deleteEvents";
 export * from "./findEventsByTargetId";
+export * from "./findEventByName";
+export * from './postEvent';
