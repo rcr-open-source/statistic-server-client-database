@@ -1,16 +1,15 @@
 import { Event, Viewer, ViewerEventEvents } from "../../models";
-import { findEventByName } from "./findEventByName";
+import { findEventByName } from "../eventQuery/findEventByName";
 import { findOrCreateViewerByIdentifier } from "../viewerQuery";
-import { createViewerEventEvents } from "../viewerEventEventsQuery";
+import { createViewerEventEvents } from ".";
 
-export async function postEvent(
+export async function postViewerEvent(
   eventName: string,
   identifier: string,
   compInfo: string,
   userInfo: string,
 ): Promise<ViewerEventEvents> {
   const event: Event | null = await findEventByName(eventName?.toString() || '');
-  console.log(event);
   const viewer: Viewer = await findOrCreateViewerByIdentifier(
     identifier,
     compInfo,
@@ -20,6 +19,5 @@ export async function postEvent(
     viewerID: viewer.id,
     eventID: event?.id || '',
   });
-  console.log(viewerEventEvents);
   return viewerEventEvents;
 }

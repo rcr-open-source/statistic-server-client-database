@@ -4,3 +4,4 @@ export * from "./findViewerEventEventss";
 export * from "./updateViewerEventEvents";
 export * from "./deleteViewerEventEvents";
 export * from "./deleteViewerEventEventss";
+export * from "./postViewerEvent";
