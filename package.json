@@ -15,7 +15,7 @@
   "license": "ISC",
   "typings": "dist/index.d.ts",
   "dependencies": {
-    "class-validator": "^0.12.2",
+    "class-validator": "0.12.2",
     "dataloader": "^2.0.0",
     "express-graphql": "^0.11.0",
     "graphql": "^15.3.0",
