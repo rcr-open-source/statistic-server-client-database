@@ -8,18 +8,16 @@ export async function postViewerEvent(
   identifier: string,
   compInfo: string,
   userInfo: string,
-): Promise<Event | null> {
-  const event: Event | null = await findEventByName(eventName?.toString() || '');
-  const viewer: Viewer = await findOrCreateViewerByIdentifier(
+): Promise<ViewerEventEvents> {
+    const viewer: Viewer = await findOrCreateViewerByIdentifier(
     identifier,
     compInfo,
     userInfo,
   );
-
+  const event: Event | null = await findEventByName(eventName?.toString() || '');
   const viewerEventEvents = await createViewerEventEvents({
     viewerID: viewer.id,
     eventID: event?.id || '',
   });
-
-  return event;
+  return viewerEventEvents;
 }
